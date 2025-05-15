@@ -53,22 +53,22 @@ const Home = () => {
               <div className="absolute inset-0 bg-black/50" />
             </div>
             <div className="absolute inset-0 flex flex-col items-center justify-center text-center px-4">
-              <h1 className="text-4xl md:text-6xl font-playfair font-bold text-white mb-4">
+              <h1 className="text-4xl md:text-6xl  font-bold text-white mb-4">
                 {slide.title}
               </h1>
-              <p className="text-xl md:text-2xl font-montserrat text-white/90 mb-8">
+              <p className="text-xl md:text-2xl text-white/90 mb-8">
                 {slide.subtitle}
               </p>
               <div className="flex flex-col sm:flex-row gap-4">
                 <Link
                   to="/menu"
-                  className="px-10 py-4 bg-primary-light dark:bg-primary-dark text-white font-montserrat font-medium hover:bg-opacity-90 hover:scale-105 transition-transform duration-300 ease-in-out transform-gpu shadow-[8px_8px_0px_0px_rgba(0,0,0,0.4)] hover:shadow-[10px_10px_0px_0px_rgba(0,0,0,0.4)]"
+                  className="px-10 py-4 bg-primary-light dark:bg-primary-dark text-white font-medium hover:bg-opacity-90 hover:scale-105 transition-transform duration-300 ease-in-out transform-gpu shadow-[8px_8px_0px_0px_rgba(0,0,0,0.4)] hover:shadow-[10px_10px_0px_0px_rgba(0,0,0,0.4)]"
                 >
                   Order Now
                 </Link>
                 <Link
                   to="/menu"
-                  className="px-10 py-4 bg-transparent border-2 border-white text-white font-montserrat font-medium hover:bg-white hover:text-primary-light dark:hover:text-primary-dark hover:scale-105 transition-transform duration-300 ease-in-out transform-gpu shadow-[8px_8px_0px_0px_rgba(0,0,0,0.4)] hover:shadow-[10px_10px_0px_0px_rgba(0,0,0,0.4)]"
+                  className="px-10 py-4 bg-transparent border-2 border-white text-white font-medium hover:bg-white hover:text-primary-light dark:hover:text-primary-dark hover:scale-105 transition-transform duration-300 ease-in-out transform-gpu shadow-[8px_8px_0px_0px_rgba(0,0,0,0.4)] hover:shadow-[10px_10px_0px_0px_rgba(0,0,0,0.4)]"
                 >
                   View Menu
                 </Link>
@@ -93,7 +93,7 @@ const Home = () => {
       <section className="py-16 px-4">
         <div className="max-w-4xl mx-auto">
           <div className="bg-white dark:bg-accent-dark rounded-2xl shadow-lg p-8 md:p-12">
-            <h2 className="text-3xl md:text-4xl font-playfair font-bold text-primary-light dark:text-primary-dark mb-6">
+            <h2 className="text-3xl md:text-4xl font-bold text-primary-light dark:text-primary-dark mb-6">
               About Trafik Lounge
             </h2>
             <p className="text-lg font-montserrat text-secondary-dark dark:text-secondary-light leading-relaxed">

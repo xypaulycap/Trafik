@@ -48,10 +48,10 @@ const Navbar = () => {
           </div>
 
           {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center space-x-8">
+          <div className="hidden md:flex items-center space-x-6">
             <Link
               to="/"
-              className={`px-6 py-4 rounded-lg text-lg font-montserrat font-medium transition-all duration-300 ${
+              className={`px-6 py-4 rounded-lg text-lg font-medium transition-all duration-300 ml-2 ${
                 isActive('/')
                   ? 'bg-primary-light dark:bg-primary-dark text-accent-light dark:text-accent-dark shadow-md'
                   : 'text-secondary-dark dark:text-secondary-light hover:bg-secondary-light dark:hover:bg-secondary-dark hover:shadow-md'
@@ -62,7 +62,7 @@ const Navbar = () => {
             
             <Link
               to="/menu/vip"
-              className={`px-6 py-4 rounded-lg text-lg font-montserrat font-medium transition-all duration-300 ${
+              className={`px-6 py-4 rounded-lg text-lg font-medium transition-all duration-300 ${
                 isActive('/menu/vip')
                   ? 'bg-primary-light dark:bg-primary-dark text-accent-light dark:text-accent-dark shadow-md'
                   : 'text-secondary-dark dark:text-secondary-light hover:bg-secondary-light dark:hover:bg-secondary-dark hover:shadow-md'
@@ -72,7 +72,7 @@ const Navbar = () => {
             </Link>
             <Link
               to="/menu/regular"
-              className={`px-6 py-4 rounded-lg text-lg font-montserrat font-medium transition-all duration-300 ${
+              className={`px-6 py-4 rounded-lg text-lg font-medium transition-all duration-300 ${
                 isActive('/menu/regular')
                   ? 'bg-primary-light dark:bg-primary-dark text-accent-light dark:text-accent-dark shadow-md'
                   : 'text-secondary-dark dark:text-secondary-light hover:bg-secondary-light dark:hover:bg-secondary-dark hover:shadow-md'
@@ -83,7 +83,7 @@ const Navbar = () => {
             
             <Link
               to="/about"
-              className={`px-6 py-4 rounded-lg text-lg font-montserrat font-medium transition-all duration-300 ${
+              className={`px-6 py-4 rounded-lg text-lg font-medium transition-all duration-300 ${
                 isActive('/about')
                   ? 'bg-primary-light dark:bg-primary-dark text-accent-light dark:text-accent-dark shadow-md'
                   : 'text-secondary-dark dark:text-secondary-light hover:bg-secondary-light dark:hover:bg-secondary-dark hover:shadow-md'
@@ -94,7 +94,7 @@ const Navbar = () => {
             
             <Link
               to="/contact"
-              className={`px-6 py-4 rounded-lg text-lg font-montserrat font-medium transition-all duration-300 ${
+              className={`px-6 py-4 rounded-lg text-lg font-medium transition-all duration-300 ${
                 isActive('/contact')
                   ? 'bg-primary-light dark:bg-primary-dark text-accent-light dark:text-accent-dark shadow-md'
                   : 'text-secondary-dark dark:text-secondary-light hover:bg-secondary-light dark:hover:bg-secondary-dark hover:shadow-md'
@@ -114,7 +114,7 @@ const Navbar = () => {
           <div className="px-2 pt-2 pb-4 space-y-2">
             <Link
               to="/"
-              className={`block px-4 py-4 rounded-lg text-lg font-montserrat font-medium transition-all duration-300 ${
+              className={`block px-4 py-4 rounded-lg text-lg font-medium transition-all duration-300 ${
                 isActive('/')
                   ? 'bg-primary-light dark:bg-primary-dark text-accent-light dark:text-accent-dark shadow-md'
                   : 'text-secondary-dark dark:text-secondary-light hover:bg-secondary-light dark:hover:bg-secondary-dark hover:shadow-md'
@@ -126,7 +126,7 @@ const Navbar = () => {
             
             <Link
               to="/menu/vip"
-              className={`block px-4 py-4 rounded-lg text-lg font-montserrat font-medium transition-all duration-300 ${
+              className={`block px-4 py-4 rounded-lg text-lg font-medium transition-all duration-300 ${
                 isActive('/menu/vip')
                   ? 'bg-primary-light dark:bg-primary-dark text-accent-light dark:text-accent-dark shadow-md'
                   : 'text-secondary-dark dark:text-secondary-light hover:bg-secondary-light dark:hover:bg-secondary-dark hover:shadow-md'
@@ -137,7 +137,7 @@ const Navbar = () => {
             </Link>
             <Link
               to="/menu/regular"
-              className={`block px-4 py-4 rounded-lg text-lg font-montserrat font-medium transition-all duration-300 ${
+              className={`block px-4 py-4 rounded-lg text-lg font-medium transition-all duration-300 ${
                 isActive('/menu/regular')
                   ? 'bg-primary-light dark:bg-primary-dark text-accent-light dark:text-accent-dark shadow-md'
                   : 'text-secondary-dark dark:text-secondary-light hover:bg-secondary-light dark:hover:bg-secondary-dark hover:shadow-md'
@@ -149,7 +149,7 @@ const Navbar = () => {
             
             <Link
               to="/about"
-              className={`block px-4 py-4 rounded-lg text-lg font-montserrat font-medium transition-all duration-300 ${
+              className={`block px-4 py-4 rounded-lg text-lg font-medium transition-all duration-300 ${
                 isActive('/about')
                   ? 'bg-primary-light dark:bg-primary-dark text-accent-light dark:text-accent-dark shadow-md'
                   : 'text-secondary-dark dark:text-secondary-light hover:bg-secondary-light dark:hover:bg-secondary-dark hover:shadow-md'
@@ -161,7 +161,7 @@ const Navbar = () => {
             
             <Link
               to="/contact"
-              className={`block px-4 py-4 rounded-lg text-lg font-montserrat font-medium transition-all duration-300 ${
+              className={`block px-4 py-4 rounded-lg text-lg font-medium transition-all duration-300 ${
                 isActive('/contact')
                   ? 'bg-primary-light dark:bg-primary-dark text-accent-light dark:text-accent-dark shadow-md'
                   : 'text-secondary-dark dark:text-secondary-light hover:bg-secondary-light dark:hover:bg-secondary-dark hover:shadow-md'
@@ -171,7 +171,7 @@ const Navbar = () => {
               Contact
             </Link>
 
-            <div className="px-4 py-4">
+            <div className="px-2 py-4">
               <ThemeToggle />
             </div>
           </div>

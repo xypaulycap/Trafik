@@ -49,10 +49,10 @@ const MenuPage = ({ customerType }) => {
         <div className="max-w-7xl mx-auto px-4 py-12">
           {/* Header */}
           <div className="text-center mb-12">
-            <h1 className="text-4xl md:text-6xl font-playfair font-bold text-white mb-4">
+            <h1 className="text-4xl md:text-6xl font-bold text-white mb-4">
               Our Menu
             </h1>
-            <p className="text-xl font-montserrat text-white/80">
+            <p className="text-xl text-white/80">
               Discover our carefully curated selection of food and drinks
             </p>
           </div>
@@ -66,7 +66,7 @@ const MenuPage = ({ customerType }) => {
                   setActiveSection(category);
                   setActiveCategory("all");
                 }}
-                className={`flex items-center space-x-2 px-4 sm:px-6 py-2 sm:py-3 font-montserrat font-medium transition-all duration-300 ${
+                className={`flex items-center space-x-2 px-4 sm:px-6 py-2 sm:py-3 font-medium transition-all duration-300 ${
                   activeSection === category
                     ? "bg-primary-light dark:bg-primary-dark text-white"
                     : "bg-white/10 text-white hover:bg-white/20"
@@ -84,7 +84,7 @@ const MenuPage = ({ customerType }) => {
 
           {/* Subcategory Filter */}
           <div className="flex flex-col sm:flex-row items-center justify-center space-y-4 sm:space-y-0 sm:space-x-4 mb-8">
-            <span className="text-white text-lg font-montserrat font-medium">
+            <span className="text-white text-lg font-medium">
               Select Category:
             </span>
             <div className="w-full sm:w-auto overflow-x-auto">
@@ -93,7 +93,7 @@ const MenuPage = ({ customerType }) => {
                   <button
                     key={subcat}
                     onClick={() => setActiveCategory(subcat)}
-                    className={`px-4 py-2 font-montserrat font-medium transition-all duration-300 whitespace-nowrap ${
+                    className={`px-4 py-2 font-medium transition-all duration-300 whitespace-nowrap ${
                       activeCategory === subcat
                         ? "bg-primary-light dark:bg-primary-dark text-white"
                         : "bg-white/10 text-white hover:bg-white/20"
@@ -126,21 +126,21 @@ const MenuPage = ({ customerType }) => {
                     </div>
                   )}
                   <div className="flex justify-between items-start mb-3">
-                    <h3 className="text-xl font-playfair font-bold text-white">
+                    <h3 className="text-xl font-bold text-white">
                       {item.name}
                     </h3>
                     <div className="flex items-baseline space-x-1">
                       <span className="text-base font-semibold text-primary-light dark:text-primary-dark">
                         ₦
                       </span>
-                      <span className="text-lg font-montserrat font-bold text-primary-light dark:text-primary-dark">
+                      <span className="text-lg font-bold text-primary-light dark:text-primary-dark">
                         {Number(
                           item.prices?.[customerType] || 0
                         ).toLocaleString("en-NG")}
                       </span>
                     </div>
                   </div>
-                  <p className="text-sm text-white/80 font-montserrat mb-4">
+                  <p className="text-sm text-white/80 mb-4">
                     {item.description}
                   </p>
                   <div className="flex justify-center mt-4">

@@ -60,7 +60,7 @@ const SelectedItems = () => {
     >
       <div className="backdrop-blur-sm bg-black/50 min-h-screen px-4 pt-12 pb-32">
         <div className="max-w-4xl mx-auto text-white">
-          <h1 className="text-4xl font-playfair font-bold mb-6 text-center">
+          <h1 className="text-4xl font-bold mb-6 text-center">
             Review Your Order
           </h1>
 
@@ -84,11 +84,11 @@ const SelectedItems = () => {
                   </button>
 
                   <div>
-                    <h2 className="text-xl font-playfair font-bold">
+                    <h2 className="text-xl font-bold">
                       {item.name}
                     </h2>
                     <p className="text-white/80">{item.description}</p>
-                    <span className="block mt-2 font-montserrat font-bold">
+                    <span className="block mt-2 font-bold">
                       ₦{price} x {quantity}
                     </span>
                   </div>
@@ -126,7 +126,7 @@ const SelectedItems = () => {
 
       {/* Fixed Footer */}
       <div className="fixed bottom-0 left-0 right-0 bg-black/80 backdrop-blur-sm py-4 px-6 flex justify-between items-center z-50 shadow-lg">
-        <span className="text-white font-bold text-xl font-montserrat">
+        <span className="text-white font-bold text-xl">
           Total: ₦{total}
         </span>
         <button

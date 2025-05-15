@@ -31,7 +31,7 @@ const Contact = () => {
           className="w-full h-full object-cover"
         />
         <div className="absolute inset-0 bg-black/50 flex items-center justify-center">
-          <h1 className="text-4xl md:text-6xl font-playfair font-bold text-white">
+          <h1 className="text-4xl md:text-6xl font-bold text-white">
             Contact Us
           </h1>
         </div>
@@ -41,12 +41,12 @@ const Contact = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
           {/* Contact Form */}
           <div className="bg-white dark:bg-accent-dark p-8 shadow-[8px_8px_0px_0px_rgba(0,0,0,0.4)]">
-            <h2 className="text-2xl font-playfair font-bold text-primary-light dark:text-primary-dark mb-6">
+            <h2 className="text-2xl font-bold text-primary-light dark:text-primary-dark mb-6">
               Send us a Message
             </h2>
             <form onSubmit={handleSubmit} className="space-y-6">
               <div>
-                <label htmlFor="name" className="block font-montserrat text-secondary-dark dark:text-secondary-light mb-2">
+                <label htmlFor="name" className="block text-secondary-dark dark:text-secondary-light mb-2">
                   Name
                 </label>
                 <input
@@ -60,7 +60,7 @@ const Contact = () => {
                 />
               </div>
               <div>
-                <label htmlFor="email" className="block font-montserrat text-secondary-dark dark:text-secondary-light mb-2">
+                <label htmlFor="email" className="block text-secondary-dark dark:text-secondary-light mb-2">
                   Email
                 </label>
                 <input
@@ -74,7 +74,7 @@ const Contact = () => {
                 />
               </div>
               <div>
-                <label htmlFor="message" className="block font-montserrat text-secondary-dark dark:text-secondary-light mb-2">
+                <label htmlFor="message" className="block text-secondary-dark dark:text-secondary-light mb-2">
                   Message
                 </label>
                 <textarea
@@ -89,7 +89,7 @@ const Contact = () => {
               </div>
               <button
                 type="submit"
-                className="w-full px-8 py-3 bg-primary-light dark:bg-primary-dark text-white font-montserrat font-medium hover:bg-opacity-90 hover:scale-105 transition-all duration-300 transform shadow-[4px_4px_0px_0px_rgba(0,0,0,0.4)] hover:shadow-[6px_6px_0px_0px_rgba(0,0,0,0.4)]"
+                className="w-full px-8 py-3 bg-primary-light dark:bg-primary-dark text-white font-medium hover:bg-opacity-90 hover:scale-105 transition-all duration-300 transform shadow-[4px_4px_0px_0px_rgba(0,0,0,0.4)] hover:shadow-[6px_6px_0px_0px_rgba(0,0,0,0.4)]"
               >
                 Send Message
               </button>
@@ -98,7 +98,7 @@ const Contact = () => {
 
           {/* Map Section */}
           <div className="bg-white dark:bg-accent-dark p-8 shadow-[8px_8px_0px_0px_rgba(0,0,0,0.4)]">
-            <h2 className="text-2xl font-playfair font-bold text-primary-light dark:text-primary-dark mb-6">
+            <h2 className="text-2xl font-bold text-primary-light dark:text-primary-dark mb-6">
               Find Us
             </h2>
             <div className="w-full h-96">
@@ -118,25 +118,25 @@ const Contact = () => {
         <div className="mt-12 grid grid-cols-1 md:grid-cols-2 gap-12">
           {/* Contact Information */}
           <div className="bg-white dark:bg-accent-dark p-8 shadow-[8px_8px_0px_0px_rgba(0,0,0,0.4)]">
-            <h2 className="text-2xl font-playfair font-bold text-primary-light dark:text-primary-dark mb-6">
+            <h2 className="text-2xl font-bold text-primary-light dark:text-primary-dark mb-6">
               Get in Touch
             </h2>
             <div className="space-y-4">
               <div className="flex items-center space-x-4">
                 <FaPhone className="text-primary-light dark:text-primary-dark text-xl" />
-                <a href="tel:+1234567890" className="font-montserrat text-secondary-dark dark:text-secondary-light hover:text-primary-light dark:hover:text-primary-dark transition-colors duration-300">
+                <a href="tel:+1234567890" className=" text-secondary-dark dark:text-secondary-light hover:text-primary-light dark:hover:text-primary-dark transition-colors duration-300">
                   +1 (234) 567-890
                 </a>
               </div>
               <div className="flex items-center space-x-4">
                 <FaWhatsapp className="text-primary-light dark:text-primary-dark text-xl" />
-                <a href="https://wa.me/1234567890" target="_blank" rel="noopener noreferrer" className="font-montserrat text-secondary-dark dark:text-secondary-light hover:text-primary-light dark:hover:text-primary-dark transition-colors duration-300">
+                <a href="https://wa.me/1234567890" target="_blank" rel="noopener noreferrer" className=" text-secondary-dark dark:text-secondary-light hover:text-primary-light dark:hover:text-primary-dark transition-colors duration-300">
                   WhatsApp: +1 (234) 567-890
                 </a>
               </div>
               <div className="flex items-center space-x-4">
                 <FaMapMarkerAlt className="text-primary-light dark:text-primary-dark text-xl" />
-                <p className="font-montserrat text-secondary-dark dark:text-secondary-light">
+                <p className=" text-secondary-dark dark:text-secondary-light">
                   123 Lounge Street, City, Country
                 </p>
               </div>
@@ -145,7 +145,7 @@ const Contact = () => {
 
           {/* Social Media Links */}
           <div className="bg-white dark:bg-accent-dark p-8 shadow-[8px_8px_0px_0px_rgba(0,0,0,0.4)]">
-            <h2 className="text-2xl font-playfair font-bold text-primary-light dark:text-primary-dark mb-6">
+            <h2 className="text-2xl font-bold text-primary-light dark:text-primary-dark mb-6">
               Follow Us
             </h2>
             <div className="flex space-x-6">
