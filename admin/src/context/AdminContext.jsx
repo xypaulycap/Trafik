@@ -34,7 +34,7 @@ const AdminContextProvider = (props) => {
             headers: getAuthHeaders()
           });
       
-          console.log('Menu Items Response:', response.data);
+        //   console.log('Menu Items Response:', response.data);
       
           const fetchedMenuItems = response.data.data || [];
           setMenuItems(fetchedMenuItems);
@@ -64,11 +64,11 @@ const AdminContextProvider = (props) => {
     const updateMenuItem = async (menuId, isAvailable) => {
         try {
             setLoading(true);
-            console.log('Sending request to toggle availability:', {
-                url: `${backendUrl}/api/admin/menu/change-availability`,
-                data: { menuId, isAvailable },
-                headers: { aToken, saToken }
-            });
+            // console.log('Sending request to toggle availability:', {
+            //     url: `${backendUrl}/api/admin/menu/change-availability`,
+            //     data: { menuId, isAvailable },
+            //     headers: { aToken, saToken }
+            // });
             
             const response = await axios.post(
                 `${backendUrl}/api/admin/menu/change-availability`,
@@ -78,7 +78,7 @@ const AdminContextProvider = (props) => {
                 }
             );
             
-            console.log('Toggle availability response:', response.data);
+            // console.log('Toggle availability response:', response.data);
 
             if (response.data.success) {
                 toast.success('Menu item availability updated successfully!', {

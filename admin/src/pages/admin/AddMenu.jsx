@@ -67,7 +67,7 @@ const AddMenu = () => {
         setLoading(false);
         return;
       }
-      console.log("Sending form data:", formData);
+      // console.log("Sending form data:", formData);
       const response = await axios.post(
         `${backendUrl}/api/admin/menu/add`,
         formData,
@@ -78,7 +78,7 @@ const AddMenu = () => {
         }
       );
 
-      console.log("Response received:", response.data);
+      // console.log("Response received:", response.data);
 
       if (response.data.success) {
         toast.success("Menu item added successfully!", {

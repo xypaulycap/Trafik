@@ -104,6 +104,7 @@ const getMenuItems = async (req, res) => {
 };
 
 // Controller to toggle menu item availability
+
 const toggleAvailability = async (req, res) => {
     try {
         const { menuId, isAvailable } = req.body;
@@ -125,17 +126,24 @@ const toggleAvailability = async (req, res) => {
             });
         }
 
-        // Update the availability
+        // Update and save the availability
         menuItem.isAvailable = isAvailable;
+        await menuItem.save(); // Save before emitting
+
+        // Emit the updated item with populated fields
+        const populatedItem = await Menu.findById(menuItem._id)
+            .populate('category')
+            .populate('subcategory');
+
+            const io = req.app.get('io'); // Get the socket.io instance from app
         
-        // Save the updated menu item
-        await menuItem.save();
+        io.emit('availability-updated', populatedItem);
 
         // Return success response
         res.status(200).json({
             success: true,
             message: `Menu item ${menuItem.isAvailable ? 'enabled' : 'disabled'} successfully`,
-            data: menuItem
+            data: populatedItem
         });
     } catch (error) {
         console.error('Error toggling menu item availability:', error);
@@ -147,58 +155,8 @@ const toggleAvailability = async (req, res) => {
     }
 };
 
-// Controller to update menu item price
-// const updatePrice = async (req, res) => {
-//     try {
-//         const { menuId, newPrice } = req.body;
-
-//         if (!menuId || !newPrice) {
-//             return res.status(400).json({
-//                 success: false,
-//                 message: 'Menu ID and new price are required'
-//             });
-//         }
-
-//         // Validate price is a number and not negative
-//         if (isNaN(newPrice) || newPrice < 0) {
-//             return res.status(400).json({
-//                 success: false,
-//                 message: 'Price must be a positive number'
-//             });
-//         }
-
-//         // Find the menu item
-//         const menuItem = await Menu.findById(menuId);
-        
-//         if (!menuItem) {
-//             return res.status(404).json({
-//                 success: false,
-//                 message: 'Menu item not found'
-//             });
-//         }
-
-//         // Update the price
-//         menuItem.price = newPrice;
-        
-//         // Save the updated menu item
-//         await menuItem.save();
-
-//         // Return success response
-//         res.status(200).json({
-//             success: true,
-//             message: 'Menu item price updated successfully',
-//             data: menuItem
-//         });
-//     } catch (error) {
-//         console.error('Error updating menu item price:', error);
-//         res.status(500).json({
-//             success: false,
-//             message: 'Error updating menu item price',
-//             error: error.message
-//         });
-//     }
-// };
-
+// Controller to update menu item prices
+// This function updates the prices of a menu item
 const updatePrice = async (req, res) => {
     try {
         const { menuId, prices } = req.body; // expecting { regular, vip }

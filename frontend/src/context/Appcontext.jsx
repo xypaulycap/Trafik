@@ -1,6 +1,8 @@
 import { createContext, useEffect, useState } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
+import socket from "../utils/socket";
+
 
 export const AppContext = createContext();
 
@@ -50,9 +52,35 @@ const [isLoadedFromStorage, setIsLoadedFromStorage] = useState(false);
     }
   };
 
-  useEffect(() => {
-    fetchMenuItems();
-  }, []);
+useEffect(() => {
+  // Listen for real-time updates
+  socket.on("availability-updated", (updatedItem) => {
+    setMenuItems((prevItems) => {
+      // Find the index of the item to update
+      const index = prevItems.findIndex(item => item._id === updatedItem._id);
+      
+      if (index !== -1) {
+        // Create a new array with the updated item
+        const updatedItems = [...prevItems];
+        // Replace the item with the updated one, keeping all populated fields
+        updatedItems[index] = {
+          ...updatedItems[index], // Keep all existing properties including populated fields
+          ...updatedItem,        // Override with updated properties
+          isAvailable: updatedItem.isAvailable // Ensure availability is updated
+        };
+        return updatedItems;
+      }
+      
+      // If item doesn't exist, add it to the array
+      return [...prevItems, updatedItem];
+    });
+  });
+
+  // Cleanup on unmount
+  return () => {
+    socket.off("availability-updated");
+  };
+}, []); // Empty dependency array since we only want to set this up once
 
  // ✅ Load from localStorage ONCE after first render
  useEffect(() => {
@@ -72,16 +100,6 @@ const [isLoadedFromStorage, setIsLoadedFromStorage] = useState(false);
     }
   }, [selectedItems, quantities, isLoadedFromStorage]);
 
-  // Update total
-  // useEffect(() => {
-  //   const totalPrice = selectedItems.reduce((sum, id) => {
-  //     const item = menuItemss.find(i => i._id === id);
-  //     const qty = quantities[id] || 1;
-  //     return sum + (item?.price || 0) * qty;
-  //   }, 0);
-  //   setTotal(totalPrice);
-  // }, [quantities, selectedItems, menuItemss]);
-
   useEffect(() => {
   const totalPrice = selectedItems.reduce((sum, entry) => {
     const qty = quantities[entry.itemId] || 1;
@@ -92,20 +110,6 @@ const [isLoadedFromStorage, setIsLoadedFromStorage] = useState(false);
 
 
   // Toggle item selection
-  // const toggleSelectItem = (id) => {
-  //   setSelectedItems(prev => {
-  //     if (prev.includes(id)) {
-  //       const updated = prev.filter(itemId => itemId !== id);
-  //       const newQuantities = { ...quantities };
-  //       delete newQuantities[id];
-  //       setQuantities(newQuantities);
-  //       return updated;
-  //     } else {
-  //       setQuantities(prevQty => ({ ...prevQty, [id]: 1 }));
-  //       return [...prev, id];
-  //     }
-  //   });
-  // };
 
   const toggleSelectItem = (id, customerType) => {
   const item = menuItemss.find((i) => i._id === id);
@@ -134,11 +138,6 @@ const [isLoadedFromStorage, setIsLoadedFromStorage] = useState(false);
     }
   });
 };
-
-
-  
-  
-  
 
   const clearSelectedItems = () => {
     setSelectedItems([]);

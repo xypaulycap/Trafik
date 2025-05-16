@@ -126,7 +126,7 @@ const Navbar = () => {
               onClick={() => setIsOpen(false)}
             >
               <span
-                className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-blue-400 bg-clip-text text-transparent"
+                className="text-2xl font-bold bg-gradient-to-r from-yellow-600 to-yellow-400 bg-clip-text text-transparent"
                 style={{
                   WebkitFontSmoothing: "antialiased",
                   MozOsxFontSmoothing: "grayscale",

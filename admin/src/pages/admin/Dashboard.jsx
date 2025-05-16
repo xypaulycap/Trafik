@@ -37,11 +37,11 @@ const Dashboard = () => {
   // Create a memoized function to get the appropriate auth headers
   const getProperAuthHeaders = useCallback(() => {
     // For debugging - remove in production
-    console.log('Auth tokens status:', { 
-      aToken: !!aToken, 
-      saToken: !!saToken, 
-      maToken: !!maToken 
-    });
+    // console.log('Auth tokens status:', { 
+    //   aToken: !!aToken, 
+    //   saToken: !!saToken, 
+    //   maToken: !!maToken 
+    // });
     
     // If using the context's getAuthHeaders, ensure it works for all roles
     // Or create headers directly based on available tokens
@@ -69,7 +69,7 @@ const Dashboard = () => {
 
          // Get auth headers INSIDE the fetchStats function to ensure they're up to date
         const authHeaders = getProperAuthHeaders();
-        console.log('Using auth headers:', authHeaders);
+        // console.log('Using auth headers:', authHeaders);
         
         // Fetch subadmins count with error handling
         let subadminCount = 0;

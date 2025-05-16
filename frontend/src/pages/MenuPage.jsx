@@ -1,35 +1,50 @@
 // MenuPage.jsx
 import React, { useContext, useState } from "react";
-import { FaUtensils, FaWineGlassAlt } from "react-icons/fa";
+import { FaUtensils, FaWineGlassAlt, FaStar } from "react-icons/fa";
 import { AppContext } from "../context/Appcontext";
 import { toast } from "react-toastify";
 import { Link } from "react-router-dom";
+import { useEffect } from "react";
 
 const MenuPage = ({ customerType }) => {
   const [activeCategory, setActiveCategory] = useState("all");
   const [activeSection, setActiveSection] = useState("Food");
-  const { menuItemss, selectedItems, toggleSelectItem } =
+  const [searchQuery, setSearchQuery] = useState("");
+
+  const { menuItemss, selectedItems, toggleSelectItem, fetchMenuItems } =
     useContext(AppContext);
 
-  // useEffect(() => {
-  //   fetchMenuItems();
-  // }, []);
+  useEffect(() => {
+
+    fetchMenuItems()
+  }, []);
 
   const allCategories = [
-    ...new Set(menuItemss.map((item) => item.category?.name)),
-  ];
+  ...new Set(menuItemss.map((item) => item.category?.name).filter(Boolean)),
+];
+
   const currentSectionItems = menuItemss.filter(
     (item) => item.category?.name === activeSection
   );
 
   const subcategories = [
-    "all",
-    ...new Set(currentSectionItems.map((item) => item.subcategory?.name)),
-  ];
-  const filteredItems = currentSectionItems.filter(
+  "all",
+  ...new Set(
+    currentSectionItems
+      .map((item) => item.subcategory?.name)
+      .filter(Boolean) // remove undefined/null
+  ),
+];
+
+const filteredItems = currentSectionItems
+  .filter(
     (item) =>
       activeCategory === "all" || item.subcategory?.name === activeCategory
+  )
+  .filter((item) =>
+    item.name.toLowerCase().includes(searchQuery.trim().toLowerCase())
   );
+
 
   const handleProceed = () => {
     if (selectedItems.length === 0) {
@@ -57,11 +72,23 @@ const MenuPage = ({ customerType }) => {
             </p>
           </div>
 
+          {/* Search Bar */}
+<div className="flex justify-center mb-8">
+  <input
+    type="text"
+    placeholder="Search menu items..."
+    value={searchQuery}
+    onChange={(e) => setSearchQuery(e.target.value)}
+    className="w-full sm:w-1/2 px-4 py-2 rounded bg-white/10 text-white placeholder-white/70 border border-white/30 focus:outline-none focus:ring-2 focus:ring-primary-light"
+  />
+</div>
+
+
           {/* Section Tabs */}
           <div className="flex justify-center space-x-4 mb-8">
             {allCategories.map((category) => (
               <button
-                key={category}
+                key={category._id}
                 onClick={() => {
                   setActiveSection(category);
                   setActiveCategory("all");
@@ -73,10 +100,13 @@ const MenuPage = ({ customerType }) => {
                 }`}
               >
                 {category === "Food" ? (
-                  <FaUtensils className="text-lg sm:text-xl" />
-                ) : (
-                  <FaWineGlassAlt className="text-lg sm:text-xl" />
-                )}
+  <FaUtensils className="text-lg sm:text-xl" />
+) : category === "Drinks" ? (
+  <FaWineGlassAlt className="text-lg sm:text-xl" />
+) : (
+  <FaStar className="text-lg sm:text-xl" />
+)}
+
                 <span>{category}</span>
               </button>
             ))}
@@ -91,7 +121,7 @@ const MenuPage = ({ customerType }) => {
               <div className="flex space-x-2 min-w-max px-2">
                 {subcategories.map((subcat) => (
                   <button
-                    key={subcat}
+                    key={subcat || `subcat-${Math.random()}`}
                     onClick={() => setActiveCategory(subcat)}
                     className={`px-4 py-2 font-medium transition-all duration-300 whitespace-nowrap ${
                       activeCategory === subcat
@@ -122,7 +152,7 @@ const MenuPage = ({ customerType }) => {
                 >
                   {isUnavailable && (
                     <div className="absolute top-2 right-2 bg-red-600 text-white text-xs font-bold px-2 py-1 rounded">
-                      Out of Stock
+                      Unavailable
                     </div>
                   )}
                   <div className="flex justify-between items-start mb-3">
