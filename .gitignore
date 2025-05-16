@@ -3,3 +3,5 @@ backend/.env
 frontend/.env
 frontend/.env.local
 admin/.env
+# .gitignore
+backend/node_modules/
