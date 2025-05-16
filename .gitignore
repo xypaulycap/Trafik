@@ -1,1 +1,5 @@
 .qodo
+backend/.env
+frontend/.env
+frontend/.env.local
+admin/.env
