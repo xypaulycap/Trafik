@@ -1,7 +1,7 @@
 // socket.js
 import { io } from "socket.io-client";
 
-const backendUrl = "http://localhost:4000"; // Change to your backend URL in production
+const backendUrl = "https://trafik-backend.onrender.com"; // Change to your backend URL in production
 const socket = io(backendUrl);
 
 export default socket;
