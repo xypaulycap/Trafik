@@ -64,13 +64,13 @@ const Home = () => {
                   to="/menu"
                   className="px-10 py-4 bg-primary-light dark:bg-primary-dark text-white font-medium hover:bg-opacity-90 hover:scale-105 transition-transform duration-300 ease-in-out transform-gpu shadow-[8px_8px_0px_0px_rgba(0,0,0,0.4)] hover:shadow-[10px_10px_0px_0px_rgba(0,0,0,0.4)]"
                 >
-                  Order Now
+                  View Reg. Menu
                 </Link>
                 <Link
                   to="/menu"
                   className="px-10 py-4 bg-transparent border-2 border-white text-white font-medium hover:bg-white hover:text-primary-light dark:hover:text-primary-dark hover:scale-105 transition-transform duration-300 ease-in-out transform-gpu shadow-[8px_8px_0px_0px_rgba(0,0,0,0.4)] hover:shadow-[10px_10px_0px_0px_rgba(0,0,0,0.4)]"
                 >
-                  View Menu
+                  View Vip Menu
                 </Link>
               </div>
             </div>
@@ -98,9 +98,6 @@ const Home = () => {
             </h2>
             <p className="text-lg font-montserrat text-secondary-dark dark:text-secondary-light leading-relaxed">
               Welcome to Trafik Lounge, where elegance meets comfort. Our lounge is designed to provide you with an unforgettable experience, combining sophisticated ambiance with exceptional service. Whether you're looking for a place to unwind after work, celebrate a special occasion, or simply enjoy quality time with friends, Trafik Lounge offers the perfect setting.
-            </p>
-            <p className="text-lg font-montserrat text-secondary-dark dark:text-secondary-light leading-relaxed mt-4">
-              Our carefully curated menu features a selection of premium beverages and delectable dishes, all prepared with the finest ingredients. Every visit to Trafik Lounge is an opportunity to create lasting memories in an atmosphere of refined luxury.
             </p>
           </div>
         </div>
