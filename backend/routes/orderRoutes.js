@@ -1,5 +1,5 @@
 import express from 'express';
-import { acceptOrder, deleteOrder, generateOrderCode, getAcceptedOrders, getOrderCode, markOrderAsCompleted, totalSalesComparison, totalSalesToday } from '../controllers/orderController.js';
+import { acceptOrder, deletedOrders, deleteOrder, generateOrderCode, getAcceptedOrders, getOrderCode, markOrderAsCompleted, totalSalesComparison, totalSalesToday } from '../controllers/orderController.js';
 import verifyToken  from '../middlewares/authAdminOrSubadmin.js';
 import authAdmin from '../middlewares/authAdmin.js';
 
@@ -15,6 +15,7 @@ router.put('/mark-completed/:id', verifyToken, markOrderAsCompleted);
 router.get('/sales/today', verifyToken, totalSalesToday);
 router.get('/sales/comparison',verifyToken, totalSalesComparison);
 router.delete('/order/:id',authAdmin, deleteOrder);
+router.get('/deleted-orders',authAdmin, deletedOrders);
 
 const orderRoutes = router;
 export default orderRoutes;

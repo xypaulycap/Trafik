@@ -14,6 +14,7 @@ import {
   FaClipboardList,
   FaWarehouse,
   FaBox,
+  FaTrash
 } from "react-icons/fa";
 import { AdminContext } from "../context/AdminContext";
 import { SubAdminContext } from "../context/SubAdminContext";
@@ -60,6 +61,11 @@ const Navbar = () => {
       path: "/admin/inventory",
       label: "Inventory",
       icon: <FaWarehouse className="mr-2" />,
+    },
+    {
+      path: "/admin/deleted-orders",
+      label: "Deleted Orders",
+      icon: <FaTrash className="mr-2" />,
     },
   ];
 

@@ -15,6 +15,7 @@ import AdminContextProvider from './context/AdminContext'
 import AcceptOrder from './pages/admin/AcceptOrder'
 import { SubAdminContext } from './context/SubAdminContext'
 import Inventory from './pages/admin/Inventory'
+import DeletedOrders from './pages/admin/DeletedOrders'
 
 const App = () => {
   const { aToken, maToken, saToken } = useContext(AdminContext);
@@ -47,6 +48,7 @@ const App = () => {
               <Route path="/admin/add-subadmin" element={<AddSubadmin />} />
               <Route path="/admin/categories" element={<Categories />} />
               <Route path="/admin/inventory" element={<Inventory />} />
+              <Route path="/admin/deleted-orders" element={<DeletedOrders />} />
               <Route path="*" element={<Navigate to="/admin/dashboard" replace />} />
               
             </>

@@ -29,7 +29,7 @@ const [isLoadedFromStorage, setIsLoadedFromStorage] = useState(false);
         {}
       );
 
-      console.log("Menu Items Response:", response.data);
+      // console.log("Menu Items Response:", response.data);
 
       const fetchedMenuItems = response.data.data || [];
       setMenuItems(fetchedMenuItems);

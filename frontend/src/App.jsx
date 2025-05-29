@@ -17,7 +17,7 @@ const App = () => {
     <Background>
       <div className='min-h-screen w-full overflow-x-hidden'>
         <ToastContainer/>
-        <div className='container mx-auto px-4 sm:px-6 lg:px-8 py-8'>
+        <div className='container mx-auto px-2 sm:px-2 lg:px-2 py-4'>
           <Navbar />
           <main className='w-full'>
             <Routes>

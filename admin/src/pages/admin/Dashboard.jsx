@@ -12,6 +12,7 @@ import {
   Activity
 } from 'lucide-react';
 import { AdminContext } from '../../context/AdminContext';
+import { useNavigate } from 'react-router-dom';
 
 const Dashboard = () => {
   const { backendUrl, aToken, getAuthHeaders, saToken, maToken,} = useContext(AdminContext);
@@ -24,6 +25,8 @@ const Dashboard = () => {
     isLoading: true,
     error: null
   });
+
+  const navigate = useNavigate()
 
   const formatCurrency = (num) => `₦${num.toLocaleString()}`;
   const formatDate = (dateString) => {
@@ -352,14 +355,14 @@ const Dashboard = () => {
             <div className="bg-white rounded-xl shadow-sm p-5">
               <h3 className="font-medium text-gray-900 mb-4">Quick Actions</h3>
               <div className="grid grid-cols-2 gap-3">
-                <button className="flex flex-col items-center justify-center p-4 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors">
+                <button onClick={() => navigate('/admin/add-menu')} className="flex flex-col items-center justify-center p-4 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors">
                   <div className="bg-blue-100 p-2 rounded-full mb-2">
                     <Package className="h-5 w-5 text-blue-600" />
                   </div>
                   <span className="text-sm font-medium text-gray-700">Add Product</span>
                 </button>
                 {aToken && (
-                  <button className="flex flex-col items-center justify-center p-4 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors">
+                  <button onClick={() => navigate('/admin/add-subadmin')} className="flex flex-col items-center justify-center p-4 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors">
                     <div className="bg-green-100 p-2 rounded-full mb-2">
                       <Users className="h-5 w-5 text-green-600" />
                     </div>
@@ -372,7 +375,7 @@ const Dashboard = () => {
                   </div>
                   <span className="text-sm font-medium text-gray-700">Categories</span>
                 </button>
-                <button className="flex flex-col items-center justify-center p-4 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors">
+                <button onClick={() => navigate('/admin/accepted-orders')} className="flex flex-col items-center justify-center p-4 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors">
                   <div className="bg-yellow-100 p-2 rounded-full mb-2">
                     <ShoppingCart className="h-5 w-5 text-yellow-600" />
                   </div>

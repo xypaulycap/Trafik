@@ -15,7 +15,7 @@ const Inventory = () => {
   const [adding, setAdding] = useState(false);
   const [newItem, setNewItem] = useState({
     name: "",
-    category: "perishable",
+    category: "food",
     quantity: "",
   });
 
@@ -65,7 +65,7 @@ const Inventory = () => {
       });
       await fetchInventory();
       setShowModal(false);
-      setNewItem({ name: "", category: "perishable", quantity: "" });
+      setNewItem({ name: "", category: "food", quantity: "" });
     } catch (error) {
       console.error("Add item failed:", error);
     }
@@ -106,8 +106,8 @@ const Inventory = () => {
             onChange={(e) => setCategoryFilter(e.target.value)}
           >
             <option value="all">All Categories</option>
-            <option value="perishable">Perishable</option>
-            <option value="non-perishable">Non-Perishable</option>
+            <option value="perishable">Food</option>
+            <option value="non-perishable">Drinks</option>
           </select>
 
           <button
@@ -226,8 +226,8 @@ const Inventory = () => {
               }
               className="w-full mb-3 px-4 py-2 border rounded-lg"
             >
-              <option value="perishable">Perishable</option>
-              <option value="non-perishable">Non-Perishable</option>
+              <option value="food">Food</option>
+              <option value="drinks">Drinks</option>
             </select>
 
             <input

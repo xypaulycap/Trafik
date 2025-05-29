@@ -32,6 +32,7 @@ const AcceptedOrders = () => {
       });
 
       let allOrders = res.data;
+      console.log("Fetched accepted orders:", allOrders);
 
       const headers = getAuthHeaders();
 
@@ -343,7 +344,7 @@ const AcceptedOrders = () => {
                       key={idx}
                       className="flex justify-between border-b border-gray-100 py-1"
                     >
-                      <span>{item.name}</span>
+                      <span>{item.itemId.name}</span>
                       <span className="font-semibold">
                         {item.quantity} x {formatCurrency(item.price)}
                       </span>

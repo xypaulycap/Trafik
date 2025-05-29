@@ -9,7 +9,7 @@ const InventorySchema = new mongoose.Schema(
     },
     category: {
       type: String,
-      enum: ["perishable", "non-perishable"],
+      enum: ["food", "drinks"],
       required: true,
     },
     quantity: {

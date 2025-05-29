@@ -48,7 +48,7 @@ const Logo = () => {
         <span className="block text-3xl md:text-4xl font-bold text-gray-800 dark:text-white tracking-wider transition-colors">
           Trafik
           {/* Gold underline accent */}
-          <span className="block h-1 w-2/3 bg-gradient-to-r from-amber-300 via-yellow-400 to-amber-300 mt-1 transform origin-left transition-transform duration-300 group-hover:scale-x-100" />
+          <span className="block h-1 w-2/3 bg-gradient-to-r from-amber-300 to-orange-400 to-amber-300 mt-1 transform origin-left transition-transform duration-300 group-hover:scale-x-100" />
         </span>
         <span className="block text-xs md:text-sm font-medium text-gray-500 dark:text-gray-300 tracking-[0.2em] uppercase mt-1 transition-colors">
           Lounge

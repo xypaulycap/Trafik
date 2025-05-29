@@ -1,7 +1,8 @@
 import Order from "../models/orderModel.js";
 import Menu from "../models/menuModel.js";
 import { nanoid } from "nanoid";
-
+import DeletedOrder from '../models/deletedOrderModel.js';
+import Inventory from '../models/inventoryModel.js';
 
 // Utils for date comparison
 const isSameDay = (date1, date2) => {
@@ -60,32 +61,78 @@ const getOrderCode = async (req, res) => {
   }
 };
 
+// const acceptOrder = async (req, res) => {
+//     try {
+        
+//         const { code, waiterName } = req.body;
+
+//         if (!code || !waiterName) {
+//           return res.status(400).json({ message: 'Code and waiter name are required' });
+//         }
+      
+//         const order = await Order.findOne({ code });
+//         if (!order) return res.status(404).json({ message: 'Order not found' });
+      
+//         order.status = 'accepted';
+//         order.waiterName = waiterName;
+//         order.acceptedAt = new Date();
+      
+//         await order.save();
+      
+//         res.json({ message: 'Order accepted', order });
+
+//     } catch (error) {
+//         console.error("Error accepting order:", error);
+//         res.json({ message: "Internal server error", error: error.message });
+        
+//     }
+// }
+
+
 const acceptOrder = async (req, res) => {
-    try {
-        
-        const { code, waiterName } = req.body;
+  try {
+    const { code, waiterName } = req.body;
 
-        if (!code || !waiterName) {
-          return res.status(400).json({ message: 'Code and waiter name are required' });
-        }
-      
-        const order = await Order.findOne({ code });
-        if (!order) return res.status(404).json({ message: 'Order not found' });
-      
-        order.status = 'accepted';
-        order.waiterName = waiterName;
-        order.acceptedAt = new Date();
-      
-        await order.save();
-      
-        res.json({ message: 'Order accepted', order });
-
-    } catch (error) {
-        console.error("Error accepting order:", error);
-        res.json({ message: "Internal server error", error: error.message });
-        
+    if (!code || !waiterName) {
+      return res.status(400).json({ message: 'Code and waiter name are required' });
     }
-}
+
+    // Find the order and populate menu item details
+    const order = await Order.findOne({ code }).populate('items.itemId');
+    if (!order) return res.status(404).json({ message: 'Order not found' });
+
+    // Go through each item in the order
+    for (const { itemId, quantity } of order.items) {
+      const itemName = itemId.name.toLowerCase();
+
+      // Look for the item in the inventory by name
+      const inventoryItem = await Inventory.findOne({ name: { $regex: new RegExp(`^${itemName}$`, 'i') } });
+      if (!inventoryItem) continue;
+
+      const isDrink = inventoryItem.category === 'drinks';
+      const isChickenOrTurkey = ['chicken', 'turkey'].includes(itemName);
+
+      if (isDrink || isChickenOrTurkey) {
+        inventoryItem.quantity = Math.max(0, inventoryItem.quantity - quantity);
+        await inventoryItem.save();
+      }
+    }
+
+    // Mark order as accepted
+    order.status = 'accepted';
+    order.waiterName = waiterName;
+    order.acceptedAt = new Date();
+    await order.save();
+
+    res.json({ message: 'Order accepted and inventory updated', order });
+
+  } catch (error) {
+    console.error("Error accepting order:", error);
+    res.status(500).json({ message: "Internal server error", error: error.message });
+  }
+};
+
+
 
 //api to get accepted orders
 const getAcceptedOrders = async (req, res) => {
@@ -161,24 +208,89 @@ const totalSalesComparison = async (req, res) => {
   }
 };
 
-//api to delete an order
-// This function deletes an order by its ID
+
 const deleteOrder = async (req, res) => {
   try {
-    const { id } = req.params;  // or use req.params.code if you prefer deleting by order code
+    const { id } = req.params;
 
-    const order = await Order.findByIdAndDelete(id);
-
+    const order = await Order.findById(id).populate('items.itemId');
     if (!order) {
       return res.status(404).json({ message: 'Order not found' });
     }
 
-    res.json({ message: 'Order deleted successfully', order });
+    // Only allow deletion if order is accepted
+    if (order.status !== 'accepted') {
+      return res.status(400).json({
+        message: `Cannot delete order with status '${order.status}'. Only accepted orders can be deleted.`,
+      });
+    }
+
+    // 🔁 Roll back inventory quantities
+    for (const orderItem of order.items) {
+      const { itemId, quantity } = orderItem;
+
+      // Ensure we have full item data
+      
+      const item = itemId;
+      if (!item) continue;
+
+      const itemName = item.name?.toLowerCase() || '';
+
+// Find the inventory item using name
+const inventoryItem = await Inventory.findOne({
+  name: new RegExp('^' + item.name + '$', 'i'),
+});
+
+if (!inventoryItem) continue;
+
+const isDrink = inventoryItem.category?.toLowerCase() === 'drinks';
+const isChickenOrTurkey = itemName.includes('chicken') || itemName.includes('turkey');
+
+if (isDrink || isChickenOrTurkey) {
+  inventoryItem.quantity += quantity;
+  await inventoryItem.save();
+}
+
+    }
+
+    // Archive the order
+    const archivedOrder = new DeletedOrder({
+      ...order.toObject(),
+      deletedAt: new Date(),
+    });
+
+    await archivedOrder.save();
+
+    // Delete the order
+    await Order.findByIdAndDelete(id);
+
+    res.json({
+      message: 'Order deleted, inventory restored, and archived successfully',
+      order: archivedOrder,
+    });
   } catch (error) {
-    console.error('Error deleting order:', error);
-    res.status(500).json({ message: 'Internal server error', error: error.message });
+    console.error('❌ Error deleting order and restoring inventory:', error);
+    res.status(500).json({
+      message: 'Internal server error',
+      error: error.message,
+    });
   }
 };
 
 
-export { generateOrderCode, getOrderCode, acceptOrder, getAcceptedOrders, markOrderAsCompleted, totalSalesToday, totalSalesComparison, deleteOrder };
+
+
+//api to fetch achieved orders
+const deletedOrders = async (req, res) => {
+
+    try {
+    const deletedOrders = await DeletedOrder.find().sort({ deletedAt: -1 });
+    res.json(deletedOrders);
+  } catch (error) {
+    res.status(500).json({ message: 'Failed to fetch deleted orders', error: error.message });
+  }
+}
+
+
+
+export { generateOrderCode, getOrderCode, acceptOrder, getAcceptedOrders, markOrderAsCompleted, totalSalesToday, totalSalesComparison, deleteOrder, deletedOrders };

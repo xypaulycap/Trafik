@@ -26,7 +26,7 @@ const addInventoryItem = async (req, res) => {
         .json({ success: false, message: "Invalid input" });
     }
 
-    if (!["perishable", "non-perishable"].includes(category)) {
+    if (!["food", "drinks"].includes(category)) {
       return res
         .status(400)
         .json({ success: false, message: "Invalid category type" });
