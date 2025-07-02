@@ -365,7 +365,8 @@ const AcceptOrder = () => {
             ref={printRef}
             className="receipt border p-4 bg-white text-black text-sm font-mono max-w-sm mx-auto"
           >
-          <div className="text-center mb-2">
+          <div className="text-center mb-2 flex flex-col items-center">
+            <img src="/images/logo.png" alt="" className="w-32" />
             <h1 className="text-lg font-bold uppercase">Trafik Lounge</h1>
             <p className="text-xs">Order Receipt</p>
             <hr className="my-1 border-black" />
