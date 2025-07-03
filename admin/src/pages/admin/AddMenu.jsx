@@ -75,7 +75,7 @@ const AddMenu = () => {
         formData,
         {
           headers: {
-            atoken: getAuthHeaders(),
+            atoken: aToken,
           },
         }
       );
