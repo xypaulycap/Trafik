@@ -359,7 +359,7 @@ const AcceptOrder = () => {
 
       {/* Printable Receipt */}
       {order && accepted && (
-        <div className="mt-8 border-t pt-4">
+        <div className="mt-4 border-t pt-2">
           <h3 className="text-lg font-semibold mb-4">Receipt Preview:</h3>
           <div
             ref={printRef}
