@@ -17,17 +17,15 @@ const AddMenu = () => {
   });
   const [categories, setCategories] = useState([]);
   const [loading, setLoading] = useState(false);
-  const { backendUrl, aToken } = useContext(AdminContext);
+  const { backendUrl, aToken, getAuthHeaders } = useContext(AdminContext);
   const navigate = useNavigate();
 
-  useEffect(() => {
-    fetchCategories();
-  }, []);
+
 
   const fetchCategories = async () => {
     try {
       const response = await axios.get(`${backendUrl}/api/admin/categories`, {
-        headers: { aToken },
+        headers: getAuthHeaders(),
       });
       if (response.data.success) {
         setCategories(response.data.categories);
@@ -36,6 +34,10 @@ const AddMenu = () => {
       toast.error("Failed to fetch categories", error.message);
     }
   };
+
+    useEffect(() => {
+    fetchCategories();
+  }, []);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
