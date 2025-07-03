@@ -323,7 +323,8 @@ const AcceptedOrders = () => {
                 <div className="flex justify-between items-center mb-2">
                   <div>
                     <h2 className="text-lg font-bold text-gray-900">
-                      Order ID: {order._id.slice(-6).toUpperCase()}
+                      {/* Order ID: {order._id.slice(-6).toUpperCase()} */}
+                      Order CODE: {order.code}
                     </h2>
                     <p className="text-sm text-gray-500">
                       Created: {formatDate(order.createdAt)}
