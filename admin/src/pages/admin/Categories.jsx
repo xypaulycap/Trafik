@@ -77,7 +77,7 @@ const Categories = () => {
         fetchCategories();
       }
     } catch (error) {
-      toast.error('Failed to add subcategory');
+      toast.error('Failed to add subcategory', error);
     } finally {
       setLoading(false);
     }
@@ -98,7 +98,7 @@ const Categories = () => {
         fetchCategories();
       }
     } catch (error) {
-      toast.error('Failed to delete category');
+      toast.error('Failed to delete category', error);
     } finally {
       setLoading(false);
     }
@@ -119,7 +119,7 @@ const Categories = () => {
         fetchCategories();
       }
     } catch (error) {
-      toast.error('Failed to delete subcategory');
+      toast.error('Failed to delete subcategory', error);
     } finally {
       setLoading(false);
     }

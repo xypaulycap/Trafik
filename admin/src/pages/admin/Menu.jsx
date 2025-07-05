@@ -51,30 +51,7 @@ const Menu = () => {
     }
   };
 
-  // const handlePriceUpdate = async (itemId, currentPrice) => {
-  //   if (editingPrice === itemId) {
-  //     // Format the price before saving (remove any non-numeric characters except decimal point)
-  //     const numericValue = parseFloat(
-  //       newPrice.toString().replace(/[^0-9.]/g, "")
-  //     );
 
-  //     if (isNaN(numericValue) || numericValue < 0) {
-  //       // Handle invalid price
-  //       alert("Please enter a valid price");
-  //       return;
-  //     }
-
-  //     const success = await updateMenuPrice(itemId, numericValue);
-  //     if (success) {
-  //       setEditingPrice(null);
-  //       setNewPrice("");
-  //     }
-  //   } else {
-  //     // Start editing
-  //     setEditingPrice(itemId);
-  //     setNewPrice(currentPrice.toString().replace(/[^0-9.]/g, ""));
-  //   }
-  // };
 
   // Filter menu items based on search query
   const filteredMenuItems = useMemo(() => {
