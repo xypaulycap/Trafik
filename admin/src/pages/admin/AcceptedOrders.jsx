@@ -14,6 +14,7 @@ import {
 const AcceptedOrders = () => {
   const [orders, setOrders] = useState([]);
   const [filter, setFilter] = useState("");
+  const [codeFilter, setCodeFilter] = useState(""); // state for filtering by order code
   const [startDate, setStartDate] = useState(""); // New start date filter
   const [endDate, setEndDate] = useState(""); // New end date filter
   const [showCompleteModal, setShowCompleteModal] = useState(false);
@@ -119,20 +120,33 @@ const AcceptedOrders = () => {
   const formatCurrency = (amount) =>
     amount.toLocaleString("en-NG", { style: "currency", currency: "NGN" });
 
-  // Filter by waiter name
-  let filteredOrders = orders.filter((order) =>
-    (order.waiterName || "").toLowerCase().includes(filter.toLowerCase())
-  );
 
-  // Filter by date range if set
+  let filteredOrders = orders;
+
+  // Filter by waiter name
+  if (filter.trim()) {
+    filteredOrders = filteredOrders.filter((order) =>
+      (order.waiterName || "").toLowerCase().includes(filter.toLowerCase())
+    );
+  }
+
+  // Filter by order code
+  if (codeFilter.trim()) {
+    filteredOrders = filteredOrders.filter((order) =>
+      (order.code || "").toLowerCase().includes(codeFilter.toLowerCase())
+    );
+  }
+
+  // Filter by start date
   if (startDate) {
     const start = new Date(startDate);
     filteredOrders = filteredOrders.filter(
       (order) => new Date(order.createdAt) >= start
     );
   }
+
+  // Filter by end date
   if (endDate) {
-    // To include the entire end date day, add 1 day minus 1 ms
     const end = new Date(endDate);
     end.setHours(23, 59, 59, 999);
     filteredOrders = filteredOrders.filter(
@@ -193,7 +207,9 @@ const AcceptedOrders = () => {
       <div className="sticky top-16 z-30 bg-gray-50 py-2 -mx-2 sm:-mx-4 px-2 sm:px-4 border-b border-gray-200 mb-4">
         <div className="max-w-7xl mx-auto">
           <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
-            <h1 className="text-2xl font-bold text-gray-900">Accepted Orders</h1>
+            <h1 className="text-2xl font-bold text-gray-900">
+              Accepted Orders
+            </h1>
 
             {/* Date Filter Inputs */}
             <div className="flex space-x-2 items-center">
@@ -246,13 +262,36 @@ const AcceptedOrders = () => {
                 </button>
               )}
             </div>
+
+            <div className="relative w-full sm:w-64">
+              <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                <FiFilter className="text-gray-400" />
+              </div>
+              <input
+                type="text"
+                placeholder="Filter by order code..."
+                value={codeFilter}
+                onChange={(e) => setCodeFilter(e.target.value)}
+                className="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md leading-5 bg-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+              />
+              {codeFilter && (
+                <button
+                  onClick={() => setCodeFilter("")}
+                  className="absolute inset-y-0 right-0 pr-3 flex items-center"
+                >
+                  <FiX className="h-4 w-4 text-gray-400 hover:text-gray-600" />
+                </button>
+              )}
+            </div>
           </div>
 
           {/* Totals Summary */}
           <div className="mt-4 grid grid-cols-1 sm:grid-cols-3 gap-4">
             {getAuthHeaders().aToken && (
               <div className="bg-white p-4 rounded-lg shadow-sm border border-gray-200">
-                <p className="text-sm font-medium text-gray-500">Total Accepted</p>
+                <p className="text-sm font-medium text-gray-500">
+                  Total Accepted
+                </p>
                 <p className="text-2xl font-semibold text-blue-600">
                   {formatCurrency(totalAccepted)}
                 </p>
@@ -261,7 +300,9 @@ const AcceptedOrders = () => {
 
             {getAuthHeaders().aToken && (
               <div className="bg-white p-4 rounded-lg shadow-sm border border-gray-200">
-                <p className="text-sm font-medium text-gray-500">Total Completed</p>
+                <p className="text-sm font-medium text-gray-500">
+                  Total Completed
+                </p>
                 <p className="text-2xl font-semibold text-green-600">
                   {formatCurrency(totalCompleted)}
                 </p>
@@ -273,8 +314,12 @@ const AcceptedOrders = () => {
                 net === 0 ? "bg-green-600" : "bg-red-600"
               }`}
             >
-              <p className="text-sm font-medium text-white opacity-90">Net Balance</p>
-              <p className="text-2xl font-bold text-white">{formatCurrency(net)}</p>
+              <p className="text-sm font-medium text-white opacity-90">
+                Net Balance
+              </p>
+              <p className="text-2xl font-bold text-white">
+                {formatCurrency(net)}
+              </p>
             </div>
           </div>
         </div>
@@ -333,7 +378,9 @@ const AcceptedOrders = () => {
                       Waiter: {order.waiterName || "N/A"}
                     </p>
                     {order.notes && (
-                      <p className="mt-1 text-gray-600 italic">Notes: {order.notes}</p>
+                      <p className="mt-1 text-gray-600 italic">
+                        Notes: {order.notes}
+                      </p>
                     )}
                   </div>
                   <div>{getStatusBadge(order.status)}</div>
@@ -396,7 +443,9 @@ const AcceptedOrders = () => {
             className="bg-white rounded-lg p-6 w-80"
             onClick={(e) => e.stopPropagation()}
           >
-            <h3 className="text-lg font-semibold mb-4">Mark Order as Completed</h3>
+            <h3 className="text-lg font-semibold mb-4">
+              Mark Order as Completed
+            </h3>
             <label className="block mb-2 font-medium text-gray-700">
               Payment Method
             </label>

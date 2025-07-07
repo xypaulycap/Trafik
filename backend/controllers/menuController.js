@@ -8,7 +8,6 @@ const addMenu = async (req, res) => {
         // Validate required fields
         if (
             !name ||
-            !description ||
             !category ||
             !subcategory ||
             !prices?.regular ||
@@ -17,7 +16,7 @@ const addMenu = async (req, res) => {
             return res.status(400).json({
                 success: false,
                 message:
-                    'Please provide all required fields: name, description, category, subcategory, and prices (regular and vip)',
+                    'Please provide all required fields: name, category, subcategory, and prices (regular and vip)',
             });
         }
 

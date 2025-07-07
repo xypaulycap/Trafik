@@ -64,11 +64,6 @@ const AdminContextProvider = (props) => {
     const updateMenuItem = async (menuId, isAvailable) => {
         try {
             setLoading(true);
-            // console.log('Sending request to toggle availability:', {
-            //     url: `${backendUrl}/api/admin/menu/change-availability`,
-            //     data: { menuId, isAvailable },
-            //     headers: { aToken, saToken }
-            // });
             
             const response = await axios.post(
                 `${backendUrl}/api/admin/menu/change-availability`,
