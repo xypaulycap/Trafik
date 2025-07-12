@@ -150,6 +150,31 @@ const AdminContextProvider = (props) => {
     }
 };
 
+  const deleteMenuItem = async (menuId) => {
+  try {
+    const response = await axios.delete(
+      `${backendUrl}/api/admin/menu/delete/${menuId}`,
+      {
+        headers: {
+          aToken,
+        },
+      }
+    );
+    
+     const { success, message } = response.data;
+
+    if (success) {
+      toast.success(message || "Deleted successfully");
+    }
+    return response.data;
+  } catch (error) {
+    console.error("Error deleting menu item:", error);
+    throw new Error(
+      error?.response?.data?.message || "Failed to delete menu item"
+    );
+  }
+};
+
     const value = {
         aToken,
         setAToken,
@@ -169,6 +194,7 @@ const AdminContextProvider = (props) => {
         setMaToken,
         aRole,
         setARole,
+        deleteMenuItem
     }
 
     return (

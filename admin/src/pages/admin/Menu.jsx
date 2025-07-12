@@ -27,6 +27,7 @@ const Menu = () => {
     updateMenuPrice,
     maToken,
     saToken,
+    deleteMenuItem,
   } = useContext(AdminContext);
   // const { saToken } = useContext(SubAdminContext);
   const [editingPrice, setEditingPrice] = useState(null);
@@ -51,8 +52,6 @@ const Menu = () => {
     }
   };
 
-
-
   // Filter menu items based on search query
   const filteredMenuItems = useMemo(() => {
     return menuItems.filter((item) => {
@@ -64,6 +63,18 @@ const Menu = () => {
       return matchesSearch;
     });
   }, [menuItems, searchQuery]);
+
+  //delete function
+  const handleDelete = async (menuId) => {
+    if (!window.confirm("Are you sure you want to delete this item?")) return;
+
+    try {
+      await deleteMenuItem(menuId, aToken);
+      fetchMenuItems(); // refresh the list
+    } catch (error) {
+      alert("Error deleting item: " + error.message);
+    }
+  };
 
   return (
     <div className="min-h-screen bg-gray-50 py-6 sm:py-8 px-4 sm:px-6 lg:px-8">
@@ -139,18 +150,28 @@ const Menu = () => {
                           {item.name}
                         </h3>
                       </div>
-                      <button
-                        onClick={() =>
-                          handleToggleAvailability(item._id, item.isAvailable)
-                        }
-                        className={`p-2 rounded-full ${
-                          item.isAvailable
-                            ? "bg-green-100 text-green-600 hover:bg-green-200"
-                            : "bg-red-100 text-red-600 hover:bg-red-200"
-                        }`}
-                      >
-                        {item.isAvailable ? <FaCheck /> : <FaTimes />}
-                      </button>
+                      <div className="flex space-x-2">
+                        <button
+                          onClick={() =>
+                            handleToggleAvailability(item._id, item.isAvailable)
+                          }
+                          className={`p-2 rounded-full ${
+                            item.isAvailable
+                              ? "bg-green-100 text-green-600 hover:bg-green-200"
+                              : "bg-red-100 text-red-600 hover:bg-red-200"
+                          }`}
+                          title="Toggle Availability"
+                        >
+                          {item.isAvailable ? <FaCheck /> : <FaTimes />}
+                        </button>
+                        <button
+                          onClick={() => handleDelete(item._id)}
+                          className="p-2 rounded-full bg-red-400 text-red-600 hover:bg-red-200"
+                          title="Delete"
+                        >
+                          🗑️
+                        </button>
+                      </div>
                     </div>
 
                     <p className="text-gray-600 mb-4 text-sm sm:text-base line-clamp-2">

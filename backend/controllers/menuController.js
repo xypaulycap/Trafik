@@ -212,6 +212,50 @@ const updatePrice = async (req, res) => {
     }
 };
 
+// Controller to delete a menu item
+const deleteMenuItem = async (req, res) => {
+  try {
+    // Accept ID either from URL param  /menus/:menuId  or from the body
+    const menuId = req.params.menuId || req.body.menuId;
+
+    if (!menuId) {
+      return res.status(400).json({
+        success: false,
+        message: 'Menu ID is required',
+      });
+    }
+
+    // Find and delete the item in one step so we can return the doc
+    const deletedItem = await Menu.findByIdAndDelete(menuId)
+      .populate('category', 'name')
+      .populate('subcategory', 'name');
+
+    if (!deletedItem) {
+      return res.status(404).json({
+        success: false,
+        message: 'Menu item not found',
+      });
+    }
+
+    // Broadcast the deletion so connected dashboards/lists can update
+    const io = req.app.get('io');
+    io.emit('menu-deleted', deletedItem);
+
+    res.status(200).json({
+      success: true,
+      message: 'Menu item deleted successfully',
+      data: deletedItem,
+    });
+  } catch (error) {
+    console.error('Error deleting menu item:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Error deleting menu item',
+      error: error.message,
+    });
+  }
+};
+
 
 const getMenuStats = async (req, res) => {
     try {
@@ -233,4 +277,4 @@ const getMenuStats = async (req, res) => {
     }
   };
 
-export { addMenu, getMenuItems, toggleAvailability, updatePrice, getMenuStats };
+export { addMenu, getMenuItems, toggleAvailability, updatePrice, getMenuStats, deleteMenuItem };

@@ -1,5 +1,5 @@
 import express from 'express';
-import { addMenu, getMenuItems, getMenuStats, toggleAvailability, updatePrice } from '../controllers/menuController.js';
+import { addMenu, deleteMenuItem, getMenuItems, getMenuStats, toggleAvailability, updatePrice } from '../controllers/menuController.js';
 import verifyAdminToken  from '../middlewares/authAdmin.js';
 import authAdminOrSubadmin from '../middlewares/authAdminOrSubadmin.js';
 import authAllAdmins from '../middlewares/authAllAdmins.js';
@@ -12,6 +12,7 @@ router.get('/menu-itemss', getMenuItems);
 router.post('/add', authAdminOrSubadmin, addMenu);
 router.post('/change-availability',authAllAdmins, toggleAvailability);
 router.post('/update-price', verifyAdminToken, updatePrice);
+router.delete('/delete/:menuId', verifyAdminToken, deleteMenuItem);
 router.get('/menu-stats', getMenuStats);
 
 
