@@ -25,6 +25,8 @@ const Inventory = () => {
     try {
       const response = await axios.get(backendUrl + "/api/admin/inventory");
       setInventoryItems(response.data.items);
+      console.log(response.data.items);
+      
     } catch (error) {
       console.error("Error fetching inventory:", error);
     }
