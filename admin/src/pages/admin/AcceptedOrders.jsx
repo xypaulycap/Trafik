@@ -392,6 +392,7 @@ const AcceptedOrders = () => {
                       key={idx}
                       className="flex justify-between border-b border-gray-100 py-1"
                     >
+                      <span>Section: {item.customerType}</span>
                       <span>{item.itemId?.name || 'Item Unknown'}</span>
                       <span className="font-semibold">
                         {item.quantity} x {formatCurrency(item.price)}

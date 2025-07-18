@@ -129,6 +129,7 @@ useEffect(() => {
       // Add item with extra data
       const selectedItem = {
         itemId: id,
+        name: item.name,
         quantity: 1,
         customerType, // make sure this is available in scope
         price: item.prices?.[customerType] || 0,

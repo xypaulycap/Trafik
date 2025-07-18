@@ -113,8 +113,9 @@ const AcceptOrder = () => {
               <div className="border-t pt-4">
                 <h2 className="font-semibold text-xl mb-2">Selected Items</h2>
                 <ul className="text-gray-700 space-y-1 mb-4">
-                  {order.items?.map(({ itemId, quantity, price }) => (
+                  {order.items?.map(({ itemId, quantity, price, customerType }) => (
                     <li key={itemId._id}>
+                      <p className="font-medium tex-lg mb-2">SECTION: {customerType}</p>
                       <span className="font-medium">{itemId.name}</span> –{" "}
                       {formatCurrency(price)} × {quantity}
                     </li>
@@ -175,7 +176,7 @@ const AcceptOrder = () => {
           <h3 className="text-lg font-semibold mb-4">Receipt Preview:</h3>
           <div
             ref={printRef}
-            className="receipt border p-4 bg-white text-black text-sm font-mono max-w-sm mx-auto"
+            className="receipt border px-6 pb-6 bg-white text-black text-sm font-mono max-w-sm mx-auto"
           >
           <div className="text-center mb-2 flex flex-col items-center">
             <img src="/images/logo.png" alt="" className="w-32 invert" />
@@ -190,11 +191,16 @@ const AcceptOrder = () => {
             <p><strong>Date/Time:</strong> {formatDate(order.createdAt)}</p>
             <hr className="my-1 border-black" />
             <ul className="mb-2">
-              {order.items?.map(({ itemId, quantity, price }) => (
-                <li key={itemId._id} className="flex justify-between text-xs mb-1">
+              {order.items?.map(({ itemId, quantity, price, customerType }) => (
+                <div key={itemId._id}>
+                  {customerType === "vip" && (
+      <p className="text-[10px] uppercase">VIP</p>
+    )}
+                <li className="flex justify-between text-xs mb-1 border-b ">
                   <span>{itemId.name} × {quantity}</span>
                   <span>{formatCurrency(price * quantity)}</span>
                 </li>
+                </div>
               ))}
             </ul>
             <hr className="my-1 border-black" />

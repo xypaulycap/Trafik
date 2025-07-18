@@ -6,7 +6,8 @@ const orderSchema = new mongoose.Schema({
       {
         itemId: { type: mongoose.Schema.Types.ObjectId, ref: 'Menu', required: true },
         quantity: { type: Number, required: true },
-        price: {type: Number, required: true}
+        price: {type: Number, required: true},
+        customerType: { type: String, enum: ['regular', 'vip'], required: true },
       },
     ],
     status: { type: String, default: 'pending' }, // pending | accepted | completed

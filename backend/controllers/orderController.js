@@ -30,38 +30,92 @@ const generateUniqueCode = async () => {
   return code;
 };
 
+// const generateOrderCode = async (req, res) => {
+//   try {
+//     const { items, customerType = "regular" } = req.body;
+
+//     // 👉 generates something like “7K2HDQ”, never “7K2-H_Q”
+//     const code = await generateUniqueCode();
+
+//     const itemsWithPrice = await Promise.all(
+//       items.map(async ({ itemId, quantity }) => {
+//         const menuItem = await Menu.findById(itemId);
+//         if (!menuItem) throw new Error(`Menu item not found: ${itemId}`);
+
+//         const price =
+//           customerType === "vip"
+//             ? menuItem.prices.vip
+//             : menuItem.prices.regular;
+
+//         return { itemId, quantity, price };
+//       })
+//     );
+
+//     const order = new Order({ code, items: itemsWithPrice });
+//     await order.save();
+
+//     res.status(201).json({ code });
+//   } catch (error) {
+//     console.error("Error generating order code:", error);
+//     res
+//       .status(500)
+//       .json({ message: "Internal server error", error: error.message });
+//   }
+// };
+
+
 const generateOrderCode = async (req, res) => {
   try {
-    const { items, customerType = "regular" } = req.body;
+    const { items } = req.body;
 
-    // 👉 generates something like “7K2HDQ”, never “7K2-H_Q”
+    if (!items || !Array.isArray(items) || items.length === 0) {
+      return res.status(400).json({ message: "No items provided" });
+    }
+
     const code = await generateUniqueCode();
 
-    const itemsWithPrice = await Promise.all(
-      items.map(async ({ itemId, quantity }) => {
+    const itemsWithDetails = await Promise.all(
+      items.map(async ({ itemId, quantity, price, customerType }) => {
         const menuItem = await Menu.findById(itemId);
         if (!menuItem) throw new Error(`Menu item not found: ${itemId}`);
 
-        const price =
-          customerType === "vip"
-            ? menuItem.prices.vip
-            : menuItem.prices.regular;
+        const allowedPrices = menuItem.prices || {};
+        const validPrice = allowedPrices[customerType];
 
-        return { itemId, quantity, price };
+        if (validPrice === undefined) {
+          throw new Error(`Invalid customer type for item: ${menuItem.name}`);
+        }
+
+        if (validPrice !== price) {
+          throw new Error(`Price mismatch for item: ${menuItem.name}`);
+        }
+
+        return {
+          itemId,
+          quantity,
+          price,
+          customerType,
+        };
       })
     );
 
-    const order = new Order({ code, items: itemsWithPrice });
+    const order = new Order({
+      code,
+      items: itemsWithDetails,
+    });
+
     await order.save();
 
     res.status(201).json({ code });
   } catch (error) {
     console.error("Error generating order code:", error);
-    res
-      .status(500)
-      .json({ message: "Internal server error", error: error.message });
+    res.status(500).json({
+      message: "Internal server error",
+      error: error.message,
+    });
   }
-};
+}
+
 
 const getOrderCode = async (req, res) => {
   try {
