@@ -1,4 +1,3 @@
-
 import React, { useState, useRef, useContext, useEffect } from "react";
 import axios from "axios";
 import { AdminContext } from "../../context/AdminContext";
@@ -24,7 +23,7 @@ const AcceptOrder = () => {
     onPrintError: (errorLocation, error) => {
       console.error("Print error:", errorLocation, error);
       setError("❌ Print failed. Please try again.");
-    }
+    },
   });
 
   const fetchOrder = async () => {
@@ -33,14 +32,14 @@ const AcceptOrder = () => {
         headers: getAuthHeaders(),
       });
       console.log(res);
-      
+
       setOrder(res.data);
       setError("");
       setAccepted(false);
       setCanPrint(false);
     } catch (err) {
       setOrder(null);
-      setError("❌ Order not found. Please check the code.",err);
+      setError("❌ Order not found. Please check the code.", err);
       setCanPrint(false);
     }
   };
@@ -55,7 +54,7 @@ const AcceptOrder = () => {
       setAccepted(true);
       setError("");
     } catch (err) {
-      setError("❌ Failed to accept order. Please try again.",err);
+      setError("❌ Failed to accept order. Please try again.", err);
       setCanPrint(false);
     }
   };
@@ -113,13 +112,17 @@ const AcceptOrder = () => {
               <div className="border-t pt-4">
                 <h2 className="font-semibold text-xl mb-2">Selected Items</h2>
                 <ul className="text-gray-700 space-y-1 mb-4">
-                  {order.items?.map(({ itemId, quantity, price, customerType }) => (
-                    <li key={itemId._id}>
-                      <p className="font-medium tex-lg mb-2">SECTION: {customerType}</p>
-                      <span className="font-medium">{itemId.name}</span> –{" "}
-                      {formatCurrency(price)} × {quantity}
-                    </li>
-                  ))}
+                  {order.items?.map(
+                    ({ itemId, quantity, price, customerType }) => (
+                      <li key={itemId._id}>
+                        <p className="font-medium tex-lg mb-2">
+                          SECTION: {customerType}
+                        </p>
+                        <span className="font-medium">{itemId.name}</span> –{" "}
+                        {formatCurrency(price)} × {quantity}
+                      </li>
+                    )
+                  )}
                 </ul>
               </div>
 
@@ -153,7 +156,9 @@ const AcceptOrder = () => {
                       if (canPrint) {
                         handlePrint();
                       } else {
-                        setError("❌ Cannot print: Receipt content is not available.");
+                        setError(
+                          "❌ Cannot print: Receipt content is not available."
+                        );
                       }
                     }}
                     disabled={!canPrint}
@@ -174,7 +179,7 @@ const AcceptOrder = () => {
       {order && accepted && (
         <div className="mt-4 border-t pt-2">
           <h3 className="text-lg font-semibold mb-4">Receipt Preview:</h3>
-          <div
+          {/* <div
             ref={printRef}
             className="receipt border px-6 pb-6 bg-white text-black text-sm font-mono max-w-sm mx-auto"
           >
@@ -213,8 +218,100 @@ const AcceptOrder = () => {
                 ) || 0
               )}
             </p>
+          </div> */}
+          {/* </div> */}
+          <div
+            ref={printRef}
+            className="receipt border px-6 pb-6 bg-white text-black text-sm font-mono max-w-sm mx-auto"
+          >
+            <div className="text-center mb-2 flex flex-col items-center">
+              <img src="/images/logo.png" alt="" className="w-32 invert" />
+              <h1 className="text-lg font-bold uppercase">Trafik Lounge</h1>
+              <p className="text-xs">Order Receipt</p>
+              <hr className="my-1 border-black" />
+            </div>
+
+            <div>
+              <p>
+                <strong>Order Code:</strong> {order.code}
+              </p>
+              <p>
+                <strong>Waiter:</strong> {waiterName}
+              </p>
+              <p>
+                <strong>Date/Time:</strong> {formatDate(order.createdAt)}
+              </p>
+              <hr className="my-1 border-black" />
+
+              <ul className="mb-2">
+                {order.items?.map(
+                  ({ itemId, quantity, price, customerType }) => (
+                    <div key={itemId._id}>
+                      {customerType === "vip" && (
+                        <p className="text-[10px] uppercase font-bold">VIP</p>
+                      )}
+                      <li className="flex justify-between text-xs mb-1 border-b border-black">
+                        <span>
+                          {itemId.name} × {quantity}
+                        </span>
+                        <span>{formatCurrency(price * quantity)}</span>
+                      </li>
+                    </div>
+                  )
+                )}
+              </ul>
+
+              <hr className="my-1 border-black" />
+
+              <p className="font-bold text-sm text-right">
+                Total:{" "}
+                {formatCurrency(
+                  order.items?.reduce(
+                    (sum, { price, quantity }) => sum + price * quantity,
+                    0
+                  ) || 0
+                )}
+              </p>
+
+              <hr className="my-2 border-black" />
+
+              {/* Payment Information */}
+              <div className="mb-3">
+                <p className="font-bold text-xs text-center mb-2 uppercase">
+                  Payment Information
+                </p>
+                <p className="text-xs">
+                  <strong>Account Name:</strong> TRAFIK LOUNGE LIMITED
+                </p>
+                <p className="text-xs">
+                  <strong>Account Number:</strong> 0123456789
+                </p>
+                <p className="text-xs">
+                  <strong>Bank:</strong> MONIE POINT
+                </p>
+              </div>
+
+              <hr className="my-2 border-black" />
+
+              {/* Disclaimer */}
+              <div className="border border-black p-2 mb-3">
+                <p className="text-[10px] font-bold text-center mb-1 uppercase">
+                  ⚠️ Important Notice
+                </p>
+                <p className="text-[10px] text-center leading-tight">
+                  Please ensure payments are made ONLY to accounts bearing the
+                  name "TRAFIK" or "TRAFIK LOUNGE". Do NOT pay into any personal
+                  accounts. For verification, contact management.
+                </p>
+              </div>
+
+              {/* Footer */}
+              <div className="text-center text-xs">
+                <p className="mb-1">Thank you for dining with us!</p>
+                <p>Visit us again soon</p>
+              </div>
+            </div>
           </div>
-        </div>
         </div>
       )}
     </div>

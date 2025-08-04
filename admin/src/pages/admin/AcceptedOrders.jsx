@@ -17,6 +17,7 @@ const AcceptedOrders = () => {
   const [codeFilter, setCodeFilter] = useState(""); // state for filtering by order code
   const [startDate, setStartDate] = useState(""); // New start date filter
   const [endDate, setEndDate] = useState(""); // New end date filter
+  const [itemFilter, setItemFilter] = useState(""); // new item filter
   const [showCompleteModal, setShowCompleteModal] = useState(false);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [selectedOrderId, setSelectedOrderId] = useState(null);
@@ -159,6 +160,34 @@ const AcceptedOrders = () => {
     (a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
   );
 
+  let itemFilteredTotalQty = 0;
+let itemFilteredTotalAmount = 0;
+
+if (itemFilter.trim()) {
+  filteredOrders = filteredOrders.filter((order) =>
+    order.items.some((item) =>
+      (item.itemId?.name || "")
+        .toLowerCase()
+        .includes(itemFilter.toLowerCase())
+    )
+  );
+
+  // Calculate total quantity & amount of that item
+  filteredOrders.forEach((order) => {
+    order.items.forEach((item) => {
+      if (
+        (item.itemId?.name || "")
+          .toLowerCase()
+          .includes(itemFilter.toLowerCase())
+      ) {
+        itemFilteredTotalQty += item.quantity;
+        itemFilteredTotalAmount += item.quantity * item.price;
+      }
+    });
+  });
+}
+
+
   const handleCompleteClick = (orderId) => {
     setSelectedOrderId(orderId);
     setShowCompleteModal(true);
@@ -283,6 +312,28 @@ const AcceptedOrders = () => {
                 </button>
               )}
             </div>
+
+            <div className="relative w-full sm:w-64">
+  <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+    <FiFilter className="text-gray-400" />
+  </div>
+  <input
+    type="text"
+    placeholder="Filter by item name..."
+    value={itemFilter}
+    onChange={(e) => setItemFilter(e.target.value)}
+    className="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md leading-5 bg-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+  />
+  {itemFilter && (
+    <button
+      onClick={() => setItemFilter("")}
+      className="absolute inset-y-0 right-0 pr-3 flex items-center"
+    >
+      <FiX className="h-4 w-4 text-gray-400 hover:text-gray-600" />
+    </button>
+  )}
+</div>
+
           </div>
 
           {/* Totals Summary */}
@@ -322,6 +373,25 @@ const AcceptedOrders = () => {
               </p>
             </div>
           </div>
+
+          {itemFilter && (
+  <div className="mt-4 bg-white p-4 rounded-lg shadow-sm border border-gray-200">
+    <h4 className="text-sm font-medium text-gray-700 mb-1">
+      Totals for "<span className="font-semibold">{itemFilter}</span>"
+    </h4>
+    <p className="text-gray-800 text-sm">
+      Quantity:{" "}
+      <span className="font-semibold text-blue-600">
+        {itemFilteredTotalQty}
+      </span>{" "}
+      | Amount:{" "}
+      <span className="font-semibold text-blue-600">
+        {formatCurrency(itemFilteredTotalAmount)}
+      </span>
+    </p>
+  </div>
+)}
+
         </div>
       </div>
 
