@@ -281,14 +281,14 @@ const AcceptOrder = () => {
                   Payment Information
                 </p>
                 <p className="text-xs">
-                  <strong>Account Name:</strong> TRAFIK LOUNGE LIMITED
+                  <strong>Account Name:</strong> 02 TRAFIK LOUNGE
                 </p>
-                <p className="text-xs">
+                {/* <p className="text-xs">
                   <strong>Account Number:</strong> 0123456789
                 </p>
                 <p className="text-xs">
                   <strong>Bank:</strong> MONIE POINT
-                </p>
+                </p> */}
               </div>
 
               <hr className="my-2 border-black" />
